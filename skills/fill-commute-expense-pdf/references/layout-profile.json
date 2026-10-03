@@ -1,0 +1,53 @@
+{
+  "profile_name": "two-page-commute-expense-form-v1",
+  "expected_page_count": 2,
+  "reference_width_px": 1187,
+  "reference_height_px": 1755,
+  "aspect_ratio_tolerance": 0.02,
+  "ink_rgb": [0.03, 0.08, 0.2],
+  "styles": {
+    "target_date": {"preferred": 16.0, "minimum": 10.0},
+    "submission_date": {"preferred": 12.5, "minimum": 9.0},
+    "code": {"preferred": 14.0, "minimum": 10.0},
+    "name": {"preferred": 15.0, "minimum": 9.0},
+    "date": {"preferred": 9.2, "minimum": 8.0},
+    "site": {"preferred": 8.5, "minimum": 6.6},
+    "address": {"preferred": 7.2, "minimum": 6.0},
+    "route": {"preferred": 8.5, "minimum": 5.5},
+    "fare": {"preferred": 9.4, "minimum": 6.0},
+    "amount": {"preferred": 10.8, "minimum": 9.0},
+    "page_total": {"preferred": 11.2, "minimum": 9.0},
+    "grand_total": {"preferred": 11.5, "minimum": 9.0}
+  },
+  "pages": [
+    {
+      "reference_width_px": 1187,
+      "row_bounds": [353, 434, 516, 597, 678, 758, 837, 914, 995, 1076, 1157, 1238, 1320, 1401, 1486, 1566],
+      "date_box": [166, 236],
+      "site_box": [241, 454],
+      "route_box": [509, 960],
+      "amount_cells": [963, 987, 1011, 1036, 1060, 1084, 1108],
+      "page_total_y": [1566, 1648],
+      "metadata": {
+        "target_year_box": [520, 580, 133, 183],
+        "target_month_box": [640, 700, 133, 183],
+        "submission_year_box": [868, 925, 58, 104],
+        "submission_month_box": [962, 1017, 58, 104],
+        "submission_day_box": [1054, 1097, 58, 104],
+        "code_box": [484, 681, 220, 305],
+        "name_box": [708, 1109, 220, 305],
+        "grand_total_cells": [312, 336, 360, 384, 408, 432, 456],
+        "grand_total_y": [220, 305]
+      }
+    },
+    {
+      "reference_width_px": 1224,
+      "row_bounds": [175, 258, 341, 423, 506, 588, 670, 752, 834, 915, 996, 1077, 1157, 1238, 1321, 1403, 1486, 1567],
+      "date_box": [81, 154],
+      "site_box": [160, 382],
+      "route_box": [439, 906],
+      "amount_cells": [908, 933, 958, 983, 1007, 1032, 1057],
+      "page_total_y": [1567, 1647]
+    }
+  ]
+}

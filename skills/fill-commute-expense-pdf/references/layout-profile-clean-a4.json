@@ -1,0 +1,53 @@
+{
+  "profile_name": "clean-a4-commute-expense-form-v1",
+  "expected_page_count": 2,
+  "reference_width_px": 595.2755905511812,
+  "reference_height_px": 841.8897637795277,
+  "aspect_ratio_tolerance": 0.002,
+  "ink_rgb": [0.09, 0.09, 0.09],
+  "styles": {
+    "target_date": {"preferred": 16.0, "minimum": 12.0},
+    "submission_date": {"preferred": 10.2, "minimum": 8.8},
+    "code": {"preferred": 12.0, "minimum": 10.0},
+    "name": {"preferred": 12.0, "minimum": 9.0},
+    "date": {"preferred": 8.5, "minimum": 7.4},
+    "site": {"preferred": 8.0, "minimum": 6.2},
+    "address": {"preferred": 6.6, "minimum": 5.4},
+    "route": {"preferred": 8.2, "minimum": 5.5},
+    "fare": {"preferred": 8.5, "minimum": 6.0},
+    "amount": {"preferred": 9.8, "minimum": 8.5},
+    "page_total": {"preferred": 10.5, "minimum": 9.0},
+    "grand_total": {"preferred": 10.8, "minimum": 9.0}
+  },
+  "pages": [
+    {
+      "reference_width_px": 595.2755905511812,
+      "row_bounds": [173.8898, 212.8898, 251.8898, 290.8898, 329.8898, 368.8898, 407.8898, 446.8898, 485.8898, 524.8898, 563.8898, 602.8898, 641.8898, 680.8898, 719.8898, 758.8898],
+      "date_box": [60.0, 98.0220],
+      "site_box": [98.0220, 207.3354],
+      "route_box": [231.5745, 462.0831],
+      "amount_cells": [462.0831, 474.2819, 486.4806, 498.6794, 510.8781, 523.0769, 535.2756],
+      "page_total_y": [758.8898, 792.8898],
+      "metadata": {
+        "target_year_box": [212.0, 250.0, 61.0, 94.0],
+        "target_month_box": [267.5, 305.5, 61.0, 94.0],
+        "submission_year_box": [408.4, 439.0, 12.0, 37.0],
+        "submission_month_box": [449.2, 479.8, 12.0, 37.0],
+        "submission_day_box": [490.0, 520.6, 12.0, 37.0],
+        "code_box": [221.5937, 319.5005, 108.8898, 152.8898],
+        "name_box": [333.2835, 535.2756, 108.8898, 152.8898],
+        "grand_total_cells": [73.7830, 96.0417, 118.3004, 140.5591, 162.8178, 185.0765, 207.3354],
+        "grand_total_y": [108.8898, 152.8898]
+      }
+    },
+    {
+      "reference_width_px": 595.2755905511812,
+      "row_bounds": [77.8898, 116.8898, 155.8898, 194.8898, 233.8898, 272.8898, 311.8898, 350.8898, 389.8898, 428.8898, 467.8898, 506.8898, 545.8898, 584.8898, 623.8898, 662.8898, 701.8898, 740.8898],
+      "date_box": [60.0, 98.0220],
+      "site_box": [98.0220, 207.3354],
+      "route_box": [231.5745, 462.0831],
+      "amount_cells": [462.0831, 474.2819, 486.4806, 498.6794, 510.8781, 523.0769, 535.2756],
+      "page_total_y": [740.8898, 777.8898]
+    }
+  ]
+}

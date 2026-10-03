@@ -1,0 +1,7 @@
+interface:
+  display_name: "勤務指示から通勤費伝票"
+  short_description: "勤務指示を人物別に照合し、承認後に通勤費伝票を完成"
+  default_prompt: "Use $fill-commute-expense-pdf to reconstruct this month's work instructions, show me the full confirmation table, and complete my commute voucher after I approve it."
+
+policy:
+  allow_implicit_invocation: true

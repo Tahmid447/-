@@ -1,0 +1,190 @@
+{
+  "generatedAt": "2026-10-03T16:11:18.208Z",
+  "result": "PASS",
+  "filesScanned": 45,
+  "privatePatternCount": 19,
+  "fictionalDataOnly": true,
+  "failures": [],
+  "files": [
+    {
+      "name": ".github/workflows/check.yml",
+      "sha256": "af34b8011fac5d54e41bd29f0d932614ff5251bd4dd7b0f66b999d847fe32e65"
+    },
+    {
+      "name": ".gitignore",
+      "sha256": "fb36a220c101250dda271bd739e880fc769fb895cd02ca7909456a80e7096ce7"
+    },
+    {
+      "name": "BROWSER_QA.md",
+      "sha256": "93c44b74c1350f75327edeacd06edbf35ec67a816c7da8d09b3ebb8dd3667797"
+    },
+    {
+      "name": "PUBLIC_RELEASE_CHECKLIST.md",
+      "sha256": "6deba6684167c95375a4013b32ab9e65cbec0868180cfb9c5daa64d8b91fbfd4"
+    },
+    {
+      "name": "README.md",
+      "sha256": "748e5bf692bfa2328b7ba88e4b8886fa4fdb5e2d58f4691aade79d0bb7a1b83b"
+    },
+    {
+      "name": "_headers",
+      "sha256": "9e1af20cc85917a80cb3856289c0c52e83a67fb5a2bab6377ca1ee1c5ff79846"
+    },
+    {
+      "name": "_redirects",
+      "sha256": "5827b9d0cea872fa7802ef735ba523604c138ec8e94ec784d98335d347074420"
+    },
+    {
+      "name": "app.js",
+      "sha256": "a636c3d403c8cd3671f9f6c1648726215368c2e5188cf1fe6e6225d89902bd5c"
+    },
+    {
+      "name": "commute-core.js",
+      "sha256": "65943b67fac4f20c8882876562399c799eeb20e2202b7f7a1cf92d9d4fa261b1"
+    },
+    {
+      "name": "commute-slip-app-standalone.html",
+      "sha256": "7a0b234aaac4e80b8cdc67d46dcbe70a113a1ac77c56f42885464cd3f85d4f18"
+    },
+    {
+      "name": "commute-slip-blank-template.html",
+      "sha256": "7a0b234aaac4e80b8cdc67d46dcbe70a113a1ac77c56f42885464cd3f85d4f18"
+    },
+    {
+      "name": "index.html",
+      "sha256": "0c8c4357fd6d78c99ef12b232ecd75c4d8e4638eb03acbb864dfeee0cccaca4d"
+    },
+    {
+      "name": "package-lock.json",
+      "sha256": "4b3903c704d64ecbfac94f24c001d791d2f68aca0fe4c98d6ba41e4fa105031b"
+    },
+    {
+      "name": "package.json",
+      "sha256": "bb285a0a3f4d66463bea72e6c868ca22f74dea964532133d1e623a90b1af8ce7"
+    },
+    {
+      "name": "sample-data.js",
+      "sha256": "248d331ddd4619de4d504d407160fb31f0c5f30763ec7feeca4907cd9f3dfab8"
+    },
+    {
+      "name": "sample-data.json",
+      "sha256": "6f3b7e6ba5653a8fc59573d1bdc3876c6b9b0d70771e78e86539ef233ec1293b"
+    },
+    {
+      "name": "scripts/audit-public.mjs",
+      "sha256": "66cde31c3e1c5cc0b7d1b2ca210b60eebc6dba9216f8e05b7f53c642b68b777d"
+    },
+    {
+      "name": "scripts/build.mjs",
+      "sha256": "0109133f54e995381ebf05b9b82188bd1272ae56c32bcf0c969db2ec59a04e6c"
+    },
+    {
+      "name": "scripts/sync-skill.mjs",
+      "sha256": "30653488a304a5b48b42116663af2d4542d8f65e4a27518c69613d533ca4c0b1"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/SKILL.md",
+      "sha256": "a7981689cb44d57a53c8b52f63181513c9a209cb3b9a835bb741d02b1a74befb"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/agents/openai.yaml",
+      "sha256": "2f7af7cf3601771a1e63d874eaa7b3dec4307921bbfbf2f54364df4ec8747c1b"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/assets/blank-commute-voucher.docx",
+      "sha256": "f14da5c9da2f0cfc7464629314d8213aad943fde5bd52f581ab911cd9f42f351"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/assets/blank-commute-voucher.pdf",
+      "sha256": "5be33c27fc47bb7f8651d57361b979924cd4f29b230cb5d258665c43e8681d8a"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/references/company-form.md",
+      "sha256": "d1ace6f73d144e01026f0b31a7faacdc95637bd8c2a3e7c822ccae7cc59abae2"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/references/input-schema.md",
+      "sha256": "f5a0267d12f70bcfc5587d21e187e00bdfdeb64489da7758a6e87b4d79ca7063"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/references/instruction-chains.md",
+      "sha256": "89a48cd140b9fedfec873ce45c04b1333b62521368da2a2d3b82a7f351d437ae"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/references/layout-profile-clean-a4.json",
+      "sha256": "b6f6987c989139d95de579b416c88cb28d19687225b86ca54d107e9e4981df20"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/references/layout-profile.json",
+      "sha256": "f26f2c960a6d579e6160f9951fb6985440fcdd6baf79d9cd6ddfa0920493bacb"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/references/qa-checklist.md",
+      "sha256": "10d73b0c1b3952e8f9cf41b40f111d45d5babc2078b4915d52397777e58cb27b"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/references/screen-recording-intake.md",
+      "sha256": "4d36799d3dbd8a138161f460c3990e720285d977e17de4b11d757291248dbe12"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/references/work-ledger-schema.md",
+      "sha256": "f2815f2496e097b66836c8430fffaaed77cc7d1735163284adbb5b2804771c3a"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/references/workflow-qa.md",
+      "sha256": "d803d1b094eb40a6fb5334bd24d13500dfbf66ff4c6367ae771a7e83cb4900dc"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/scripts/export_fill_data.py",
+      "sha256": "8faeccbad4985a3ccb2c66407f01d6a0195d9923f013f20542855481039417cf"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/scripts/extract_line_frames.py",
+      "sha256": "a0cd04ceb3fd61177530d32d7c160aba11ab3ee9590d1c4155c8ccdc7c45b727"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/scripts/extract_video_frames.swift",
+      "sha256": "9e7abb7a8ff0591de529ec9aa6fc92a164c9becdfbd72e6f2f689bb0d122a4eb"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/scripts/fill_commute_pdf.py",
+      "sha256": "ec68868eaff1a382539068a6d5c807a96d54b5f307fcbdceb40fe7d2e2aa2264"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/scripts/instruction_chain.py",
+      "sha256": "69d2b8238020fc62ddd98d968130715ac9705742209303e883a713dfce4043ec"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/scripts/test_export_fill_data.py",
+      "sha256": "e6ef9503adc5fa05b872ec0bac09a480527d710091ee8616fdef1958c90c6f29"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/scripts/test_instruction_chain.py",
+      "sha256": "676f2d68a20aceb7744f7a0e6412158088012fbf2bd7ee68beb877247962611b"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/scripts/test_validate_commute_data.py",
+      "sha256": "6793432c4529865cef5c99370b820f2344018e89420a948863451c3ba10a6070"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/scripts/validate_commute_data.py",
+      "sha256": "4398f8e142516430765d2cbf4fd83daee2c5263b17714d293be45b111fc10c73"
+    },
+    {
+      "name": "skills/fill-commute-expense-pdf/scripts/verify_output.py",
+      "sha256": "f5597f7dbecd523cd0969eba8a768260df0ade4ff647f03cd298f208dfa4baf6"
+    },
+    {
+      "name": "style.css",
+      "sha256": "b40badb8b1cfeab1acaf46d18657289dfb77c07ef39769423155181d050fb284"
+    },
+    {
+      "name": "tests/app.test.cjs",
+      "sha256": "c8b5d0240ff7a0cd5e9909a4f68cadc036f30218c07b3dafbc95474378241214"
+    },
+    {
+      "name": "tests/workflow.test.cjs",
+      "sha256": "e4766fd4f60ebe967db8dd3312655c4411a13f9f0caa1143427442da24de0d4d"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+/personal /?mode=personal 302
+/general /?mode=general 302
+/personal/ /?mode=personal 302
+/general/ /?mode=general 302

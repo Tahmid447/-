@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="警備員・現場勤務者向け。ChatGPTで整理した勤務データを読み込み、通勤伝票を確認・編集・印刷できるローカルWebアプリ。">
+  <meta name="theme-color" content="#102943">
+  <meta property="og:title" content="Tahmid 通勤伝票スタジオ">
+  <meta property="og:description" content="勤務データを貼り付けるだけで、確認・編集・印刷まで。">
+  <meta property="og:type" content="website">
+  <title>Tahmid 通勤伝票スタジオ</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23102943'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='serif' font-size='34' font-weight='700' fill='%23f4be59'%3ET%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <a class="brand" href="#top" aria-label="Tahmid 通勤伝票スタジオの先頭へ">
+      <span class="brand-mark" aria-hidden="true">T</span>
+      <span><small>COMMUTE SLIP STUDIO</small><strong>通勤伝票スタジオ</strong></span>
+    </a>
+    <div class="header-actions">
+      <label class="header-control">文字<select id="fontSizeControl" aria-label="画面の文字サイズ"><option value="standard">標準</option><option value="large">大きめ</option><option value="xlarge">かなり大きめ</option></select></label>
+      <label class="header-control volume-control">音量<input id="soundVolume" type="range" min="0" max="100" step="10" value="40" aria-label="効果音の音量"><output id="soundVolumeValue">40%</output></label>
+      <button class="header-button" id="guideBtn" type="button">使い方</button>
+      <button class="header-button" id="muteBtn" type="button" aria-pressed="false">音 ON</button>
+      <div class="privacy-badge"><span></span>ブラウザ内だけで処理</div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="mode-panel surface" aria-labelledby="modeTitle">
+      <div class="panel-heading"><div><span class="step">START</span><h2 id="modeTitle">利用モードを選択</h2></div><span id="modeBadge" class="mode-badge">自分・家族用</span></div>
+      <div class="mode-cards">
+        <button id="personalModeBtn" class="mode-card" type="button" aria-pressed="true"><strong>自分・家族用</strong><span>本人と父の2人から。勤務はそれぞれ独立して確認。</span></button>
+        <button id="generalModeBtn" class="mode-card" type="button" aria-pressed="false"><strong>一般の警備員用</strong><span>1人から開始。必要な対象者を追加できます。</span></button>
+      </div>
+      <p class="panel-help">両モードとも個人情報は空欄から開始。保存・復元データはモードごとに分離します。切替時は現在の下書きを端末内に保持します（共有端末では削除してください）。</p>
+    </section>
+    <section class="welcome surface" aria-labelledby="welcomeTitle">
+      <div class="welcome-copy">
+        <span class="product-kicker">DESIGNED FOR JAPANESE SECURITY WORKERS</span>
+        <h1 id="welcomeTitle">勤務データから、<br><em>迷わない通勤伝票</em>へ。</h1>
+        <p>ChatGPTで整理したJSONやCSVを読み込み、確認・修正・会社様式の印刷まで、この画面だけで完了します。</p>
+        <div class="hero-actions">
+          <button class="button primary" id="heroSampleBtn" type="button">デモ用サンプルを表示</button>
+          <button class="button light" id="heroPasteBtn" type="button">データを貼り付ける</button>
+          <label class="button light file-button" for="dataFileInput">ファイルをアップロード</label>
+          <button class="button ghost" id="newDocumentBtn" type="button">新しい伝票を作成</button>
+        </div>
+      </div>
+      <ol class="flow-steps" aria-label="3ステップの使い方">
+        <li><span>01</span><div><strong>勤務を整理</strong><small>ChatGPTで動画・指示を確認</small></div></li>
+        <li><span>02</span><div><strong>データを読込</strong><small>JSON、CSV、テキストに対応</small></div></li>
+        <li><span>03</span><div><strong>確認して印刷</strong><small>会社様式をA4 PDFへ</small></div></li>
+      </ol>
+    </section>
+
+    <input id="dataFileInput" type="file" accept=".json,.csv,.txt,application/json,text/csv,text/plain" hidden>
+
+    <section class="command-bar surface" aria-label="主要操作">
+      <div class="command-status">
+        <span class="status-dot"></span>
+        <div><strong id="statusTitle">新しい伝票を作成中</strong><small id="statusDetail">個人情報は空欄から開始します</small></div>
+      </div>
+      <div class="command-actions">
+        <button class="button compact" id="pasteBtn" type="button" title="ChatGPTのJSONコードブロックも自動検出します">JSON・テキスト貼付</button>
+        <button class="button compact" id="loadSampleBtn" type="button">デモ用サンプルへ戻す</button>
+        <button class="button compact" id="saveLocalBtn" type="button">現在のデータを保存</button>
+        <button class="button compact" id="loadLocalBtn" type="button">保存データを開く</button>
+        <button class="button compact" id="restoreBackupBtn" type="button">直前のデータを復元</button>
+        <button class="button compact danger-soft" id="clearLocalBtn" type="button">保存データ削除</button>
+        <button class="button compact" id="validateBtn" type="button">データ内容をチェック</button>
+      </div>
+    </section>
+
+    <section id="validationPanel" class="validation-panel surface" aria-live="polite" hidden>
+      <div class="validation-heading"><div><span id="validationIcon">✓</span><strong id="validationTitle">問題なし</strong></div><button class="icon-button" id="closeValidationBtn" type="button" aria-label="チェック結果を閉じる">×</button></div>
+      <ul id="validationList"></ul>
+    </section>
+
+    <section class="planning-panel surface" aria-labelledby="planningTitle">
+      <div class="panel-heading"><div><span class="step">CHECK</span><h2 id="planningTitle">勤務回数の照合</h2></div><span class="mode-badge">回数合わせは禁止</span></div>
+      <p class="panel-help">前半・後半だけを任意入力します。空欄は「未入力」で、0回とは異なります。1つの実勤務を1回として、夜勤の翌朝終了は追加しません。健康診断・会社用件は精算行数と区別します。</p>
+      <div id="workCountsForm" class="count-inputs"></div>
+      <div class="count-table-wrap"><table class="count-table"><caption>入力済み明細との照合（候補の数は実勤務の証明ではありません）</caption><thead><tr><th>対象者</th><th>期間</th><th>申告</th><th>確定候補</th><th>要確認</th><th>差分</th></tr></thead><tbody id="workCountsResult"></tbody></table></div>
+      <div id="instructionReview" class="instruction-review" aria-live="polite"></div>
+      <div class="approval-controls">
+        <label><input id="openQuestions" type="checkbox"> 未解決の確認事項がある</label>
+        <label><input id="reviewApproved" type="checkbox"> 候補表・変更履歴・対象者・勤務日・経路・運賃を確認し、未解決事項がない内容の記入を承認する</label>
+      </div>
+      <p id="approvalStatus" class="panel-help" role="status">未承認：Prompt Aで確認してください。</p>
+    </section>
+
+    <section class="workspace">
+      <aside class="panel people-panel">
+        <div class="panel-heading">
+          <div><span class="step">01</span><h2>対象者</h2></div>
+          <button class="icon-button" id="addPersonBtn" type="button" aria-label="新しい対象者を追加" title="新しい対象者を追加">＋</button>
+        </div>
+        <p class="panel-help">選ぶと、その人の勤務と帳票へ切り替わります。</p>
+        <div id="peopleList" class="people-list"></div>
+        <div class="people-actions">
+          <button class="button tiny" id="duplicatePersonBtn" type="button">勤務ごと複製</button>
+          <button class="button tiny danger-soft" id="deletePersonBtn" type="button">この人を削除</button>
+        </div>
+        <div class="summary-card">
+          <span>選択中の請求額</span><strong id="selectedTotal">￥0</strong><small id="selectedRows">0件</small>
+          <div class="summary-divider"></div>
+          <span>全員の合計</span><b id="allPeopleTotal">￥0</b>
+        </div>
+        <div class="edit-stamp"><span>最終編集</span><time id="lastEdited">未編集</time></div>
+      </aside>
+
+      <section class="panel editor-panel">
+        <div class="panel-heading">
+          <div><span class="step">02</span><h2>社員・勤務データ</h2></div>
+          <span class="autosave">入力を即時反映</span>
+        </div>
+
+        <form id="employeeForm" class="employee-grid" autocomplete="off">
+          <label>氏名<input id="employeeName" name="name" type="text" placeholder="例：山田 太郎"></label>
+          <label>社員コード<input id="employeeCode" name="code" type="text" inputmode="numeric" placeholder="例：000001"></label>
+          <label>対象月<input id="targetMonth" name="targetMonth" type="month"></label>
+          <label>提出日<input id="submissionDate" name="submissionDate" type="date"></label>
+          <label class="wide-two">会社名<input id="companyName" name="companyName" type="text" placeholder="会社名"></label>
+          <label class="wide-two">最寄り駅（複数は読点区切り）<input id="nearestStations" name="nearestStations" type="text" placeholder="駅A、駅B"></label>
+          <label class="wide-three">住所<input id="employeeAddress" name="address" type="text" placeholder="自宅住所"></label>
+          <label>印鑑名<input id="hankoName" name="hankoName" type="text" maxlength="4" placeholder="山田"></label>
+          <label class="check-field"><input id="showDigitalHanko" name="showDigitalHanko" type="checkbox"><span>デジタル印鑑を表示</span></label>
+          <div class="hanko-settings wide-two">
+            <div class="hanko-preview-box"><span>印鑑プレビュー</span><b id="hankoPreview">印</b></div>
+            <label>印鑑サイズ <output id="hankoScaleValue">100%</output><input id="hankoScale" name="hankoScale" type="range" min="100" max="150" step="10" value="100"></label>
+          </div>
+          <label class="wide-three">備考<input id="employeeNote" name="notes" type="text" placeholder="本人・経路の補足"></label>
+        </form>
+
+        <div class="data-heading">
+          <div><h3>勤務明細</h3><p>片道運賃から往復額を自動計算します。対象月外の日付も、月外精算として選択できます。</p></div>
+          <button class="button small" id="addRowBtn" type="button">＋ 勤務を追加</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>勤務日</th><th>区分</th><th>勤務先名<br><small>取引先・会社</small></th><th>現場名</th><th>通勤区間</th><th>片道</th><th>往復</th><th>運賃種別</th><th>現場住所・最寄り駅・確認URL・備考</th><th>操作</th></tr></thead>
+            <tbody id="rowsBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="preview-column" aria-label="帳票プレビュー">
+        <div class="preview-heading">
+          <div><span class="step">03</span><h2>印刷プレビュー</h2></div>
+          <span id="pageCount">2ページ</span>
+        </div>
+        <div class="preview-controls surface">
+          <label>印刷倍率<select id="printScale"><option value="1">100%</option><option value="0.95">95%</option><option value="0.9">90%</option></select></label>
+          <label>プレビュー拡大<select id="previewScale"><option value="0.85">85%</option><option value="1" selected>100%</option><option value="1.25">125%</option><option value="1.5">150%</option></select></label>
+          <button class="button compact" id="saveJsonBtn" type="button">JSON保存</button>
+          <button class="button compact" id="saveCsvBtn" type="button">CSV保存</button>
+          <button class="button compact" id="saveHtmlBtn" type="button">HTML保存</button>
+          <button class="button dark" id="printBtn" type="button">この人を印刷・PDF</button>
+          <button class="button primary" id="printAllBtn" type="button">全員まとめて印刷</button>
+        </div>
+        <p class="preview-note">画面上では用紙全体を縮小表示します。印刷時は専用のA4領域へ切り替わるため、途中で切れません。</p>
+        <div id="previewPages" class="preview-pages"></div>
+      </section>
+    </section>
+
+    <section class="support-grid">
+      <article class="support-card prompt-card">
+        <span class="support-kicker">CHATGPT → TAHMID STUDIO</span><h2>2段階で正確なデータを作る</h2>
+        <p><b>Aで候補を確認</b>し、質問への回答が終わってから<b>Bで確定JSON</b>を作ります。</p>
+        <div class="prompt-block"><h3>A．動画・資料の確認用</h3><pre id="chatgptPromptA">勤務動画・勤務指示・関連資料を確認し、通勤伝票の候補表を作成してください。
+勤務日を勝手に作らず、勤務した日を抜かさないでください。不明点・迷う点は「要確認」として質問してください。
+まず勤務日、区分、勤務先名、現場名、現場住所、最寄り駅、通勤区間、片道IC運賃、往復金額、根拠を一覧化してください。
+交通ルートと運賃は根拠付きの候補として示し、いきなり最終JSONを出さないでください。私が確認するまで確定しないでください。</pre><button class="button small" id="copyPromptABtn" type="button">確認用プロンプトAをコピー</button></div>
+        <div class="prompt-block"><h3>B．確認後の最終JSON用</h3><pre id="chatgptPromptB">確認済みの内容だけを使い、Tahmid 通勤伝票スタジオへ読み込めるJSONを作成してください。
+出力はJSONコードブロックのみとし、appVersion、documentType、targetMonth、submissionDate、companyName、people、entriesを含めてください。
+各entriesにはdate、workType、clientName、siteName、siteAddress、nearestStation、route、transport、oneWayFare、roundTripFare、fareType、verificationUrl、memoを含めてください。
+不明な項目は空文字またはnullにし、推測で勤務日や金額を追加しないでください。個人情報を公開用サンプルへ転用しないでください。</pre><button class="button primary" id="copyPromptBBtn" type="button">最終JSON用プロンプトBをコピー</button></div>
+      </article>
+      <article class="support-card before-after">
+        <span class="support-kicker">BEFORE / AFTER</span><h2>手書きの迷いを、確認できる流れへ</h2>
+        <div class="compare"><div><b>Before</b><p>手書き・電卓・ルート確認・ミス確認に時間がかかる</p></div><span>→</span><div><b>After</b><p>確認済みデータを貼り付け、編集してA4印刷まで完了</p></div></div>
+        <label class="share-copy">紹介用の説明文<textarea id="shareText" rows="3" readonly>勤務動画や勤務表をChatGPTで整理し、そのデータを貼り付けるだけで、通勤伝票を確認・編集・印刷できるツールです。</textarea></label>
+        <button class="button" id="copyShareBtn" type="button">紹介文をコピー</button>
+      </article>
+      <article class="support-card privacy-card">
+        <span class="support-kicker">PRIVACY FIRST</span><h2>入力データは外部へ送信しません</h2>
+        <p>この版はHTML・CSS・JavaScriptだけで動き、入力内容を外部APIへ送信しません。編集の復元用バックアップとモード切替用の下書きは、この端末のブラウザへ自動保存します。明示的な保存データもモード別です。これは暗号化やアクセス制限ではありません。</p>
+        <h3>公開前チェック</h3>
+        <ul class="release-checklist"><li>氏名・コード・住所が架空</li><li>勤務先・経路・運賃が架空</li><li>保存データを削除済み</li><li>実データ入りHTMLを同梱していない</li></ul>
+        <p class="privacy-note">運賃確認を押した場合だけ、Google Maps、Yahoo!路線情報、または登録URLを別タブで開きます。</p>
+        <button class="button danger-soft" id="clearAllBtn" type="button">入力データをリセット</button>
+        <button class="button danger-soft" id="eraseAllStorageBtn" type="button">両モードの端末内データを完全削除</button>
+      </article>
+    </section>
+  </main>
+
+  <footer><span>Tahmid 通勤伝票スタジオ</span><small>Created by Tahmid · 現場勤務の通勤伝票作成を、もっと簡単に。</small></footer>
+
+  <dialog id="pasteDialog" class="data-dialog">
+    <form method="dialog" class="dialog-card">
+      <div class="dialog-heading"><div><span class="step">IMPORT</span><h2>データを貼り付け</h2></div><button class="icon-button" value="cancel" aria-label="閉じる">×</button></div>
+      <p>JSON、CSV、またはChatGPTの回答全文を貼り付けてください。JSONコードブロックが含まれていれば自動で取り出します。</p>
+      <textarea id="pasteArea" rows="15" placeholder="```json から始まるChatGPTの回答もそのまま貼り付けられます"></textarea>
+      <div class="dialog-actions"><button class="button" value="cancel">キャンセル</button><button class="button primary" id="applyPasteBtn" value="default">読み込んで反映</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="newDocumentDialog" class="data-dialog confirm-dialog">
+    <form method="dialog" class="dialog-card">
+      <div class="dialog-heading"><div><span class="step">SAFE RESET</span><h2 id="newDocumentDialogTitle">新しい伝票を作成</h2></div><button class="icon-button" value="cancel" aria-label="閉じる">×</button></div>
+      <p id="newDocumentDialogText">現在のデータがあります。保存せずに新しく作成しますか？ 直前のデータは端末内へ自動バックアップされます。</p>
+      <div class="dialog-actions three-actions"><button class="button" value="cancel">キャンセル</button><button class="button dark" id="newSaveFirstBtn" type="button">JSON保存後に実行</button><button class="button danger-soft" id="newDiscardBtn" type="button">そのまま実行</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="clearSavedDialog" class="data-dialog confirm-dialog">
+    <form method="dialog" class="dialog-card">
+      <div class="dialog-heading"><div><span class="step">SAVED DATA</span><h2>ブラウザ保存データを削除</h2></div><button class="icon-button" value="cancel" aria-label="閉じる">×</button></div>
+      <p>明示的に保存したデータをこのブラウザから削除します。現在の画面内容は残り、削除前の保存データは「直前のデータを復元」用に退避します。</p>
+      <div class="dialog-actions"><button class="button" value="cancel">キャンセル</button><button class="button danger-soft" id="confirmClearLocalBtn" type="button">保存データを削除</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="guideDialog" class="data-dialog guide-dialog">
+    <form method="dialog" class="dialog-card">
+      <div class="dialog-heading"><div><span class="step">GUIDE</span><h2>はじめての使い方</h2></div><button class="icon-button" value="cancel" aria-label="閉じる">×</button></div>
+      <ol class="guide-list">
+        <li><strong>デモを試す</strong><span>架空データです。人・勤務の追加、複製、削除を自由に試せます。</span></li>
+        <li><strong>ChatGPTのJSONを入れる</strong><span>「JSON・テキスト貼付」またはファイルアップロードを使います。</span></li>
+        <li><strong>勤務を編集する</strong><span>カレンダー、勤務区分、IC／現金を選び、取引先・現場・住所・最寄り駅を分けて入力できます。</span></li>
+        <li><strong>運賃を再確認する</strong><span>各行からGoogle Maps、Yahoo!路線情報、登録済みURLを開けます。</span></li>
+        <li><strong>印鑑を設定する</strong><span>表示をオンにし、画面の赤い印を見ながら100～150%のサイズを選べます。</span></li>
+        <li><strong>消す前に退避する</strong><span>新規作成・デモ復帰・リセット前は確認画面が出ます。JSON保存または「直前のデータを復元」を利用できます。</span></li>
+        <li><strong>印刷・PDF保存</strong><span>データチェック後、「この人」または「全員」を選び、印刷画面でPDF保存します。</span></li>
+      </ol>
+      <div class="dialog-actions"><button class="button primary" value="cancel">理解しました</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <section id="printRoot" aria-label="印刷専用帳票"></section>
+  <script src="sample-data.js"></script>
+  <script src="commute-core.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
