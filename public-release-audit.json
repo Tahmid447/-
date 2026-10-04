@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-03T16:11:18.208Z",
+  "generatedAt": "2026-10-04T04:19:03.044Z",
   "result": "PASS",
-  "filesScanned": 45,
+  "filesScanned": 46,
   "privatePatternCount": 19,
   "fictionalDataOnly": true,
   "failures": [],
@@ -40,15 +40,15 @@
     },
     {
       "name": "commute-core.js",
-      "sha256": "65943b67fac4f20c8882876562399c799eeb20e2202b7f7a1cf92d9d4fa261b1"
+      "sha256": "f2249d74698e616569625b3bac385a47985009d7d7aa2bd0bf0bdb2f2b3224cf"
     },
     {
       "name": "commute-slip-app-standalone.html",
-      "sha256": "7a0b234aaac4e80b8cdc67d46dcbe70a113a1ac77c56f42885464cd3f85d4f18"
+      "sha256": "16d6534fd32df0716795c26748b99ed279a0f380aa6b5afc3bf3eb0ebb04e348"
     },
     {
       "name": "commute-slip-blank-template.html",
-      "sha256": "7a0b234aaac4e80b8cdc67d46dcbe70a113a1ac77c56f42885464cd3f85d4f18"
+      "sha256": "16d6534fd32df0716795c26748b99ed279a0f380aa6b5afc3bf3eb0ebb04e348"
     },
     {
       "name": "index.html",
@@ -181,6 +181,10 @@
     {
       "name": "tests/app.test.cjs",
       "sha256": "c8b5d0240ff7a0cd5e9909a4f68cadc036f30218c07b3dafbc95474378241214"
+    },
+    {
+      "name": "tests/prompt-regressions.test.cjs",
+      "sha256": "dc92a8dbdf578427d1081388f15e39f34acda902378c30cd85aab6ef44fcc881"
     },
     {
       "name": "tests/workflow.test.cjs",
